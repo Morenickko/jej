@@ -1,80 +1,149 @@
-!DOCTYPE html
-html lang=es
-head
-meta charset=UTF-8
-titleSecurity Alerttitle
-style
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Federal Security Scan</title>
+
+<style>
 body {
-    background-color black;
-    color #00ff00;
-    font-family monospace;
-    text-align center;
-    padding-top 10%;
+    margin: 0;
+    background: black;
+    color: #00ff00;
+    font-family: "Courier New", monospace;
+    overflow: hidden;
 }
+
+#matrix {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.container {
+    text-align: center;
+    margin-top: 10%;
+}
+
+.logo {
+    width: 120px;
+    height: 120px;
+    border: 3px solid #00ff00;
+    border-radius: 50%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+}
+
 .box {
-    border 2px solid #00ff00;
-    padding 30px;
-    width 70%;
-    margin auto;
+    border: 2px solid #00ff00;
+    padding: 30px;
+    width: 60%;
+    margin: 30px auto;
 }
+
+.progress-bar {
+    width: 100%;
+    background: #003300;
+    border: 1px solid #00ff00;
+    height: 25px;
+    margin-top: 20px;
+}
+
+.progress {
+    height: 100%;
+    width: 0%;
+    background: #00ff00;
+}
+
 .hidden {
-    display none;
+    display: none;
 }
-button {
-    margin-top 20px;
-    padding 10px 20px;
-    background-color red;
-    color white;
-    border none;
-    cursor pointer;
+</style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div class="container">
+    <div class="logo">
+        F.B.I.<br>
+        Federal Browsing Inspector
+    </div>
+
+    <div class="box" id="scanBox">
+        <h2>INICIANDO ESCANEO FORENSE DIGITAL</h2>
+        <p id="status">Analizando tráfico de red...</p>
+
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+
+        <p id="percent">0%</p>
+    </div>
+</div>
+
+<script>
+// Matrix effect
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+const letters = "01";
+const fontSize = 14;
+const columns = canvas.width / fontSize;
+
+const drops = [];
+for (let x = 0; x < columns; x++)
+    drops[x] = 1;
+
+function drawMatrix() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#00ff00";
+    ctx.font = fontSize + "px monospace";
+
+    for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975)
+            drops[i] = 0;
+
+        drops[i]++;
+    }
 }
-style
-head
-body
+setInterval(drawMatrix, 33);
 
-div class=box id=alertBox
-    h1⚠ FEDERAL BROWSING INSPECTOR ⚠h1
-    pEscaneando dispositivo...p
-    p id=progressIniciando análisis...p
-div
+// Progress simulation
+let progress = 0;
+let progressBar = document.getElementById("progress");
+let percentText = document.getElementById("percent");
+let statusText = document.getElementById("status");
 
-div class=box hidden id=resultBox
-    h2RESULTADO DEL ANÁLISISh2
-    pSe detectó un nivel inusual de tráfico hacia sitios educativos para adultos.p
-    pModo incógnito usado EXCESIVO.p
-    pTiempo promedio diario Vergonzoso.p
-    button onclick=revealJoke()Ver Resolución Oficialbutton
-div
+let interval = setInterval(() => {
+    progress++;
+    progressBar.style.width = progress + "%";
+    percentText.innerText = progress + "%";
 
-div class=box hidden id=jokeBox
-    h2😂 RELÁJATEh2
-    pEra una broma, enfermito.p
-    pTu historial está a salvo (creo).p
-div
+    if (progress == 25) statusText.innerText = "Accediendo a historial incógnito...";
+    if (progress == 50) statusText.innerText = "Detectando contenido sospechoso...";
+    if (progress == 75) statusText.innerText = "Generando reporte federal...";
+    
+    if (progress >= 100) {
+        clearInterval(interval);
+        statusText.innerHTML = "<br><strong>pico pal que lee</strong> 😂";
+    }
 
-script
-let progressText = document.getElementById(progress);
-let alertBox = document.getElementById(alertBox);
-let resultBox = document.getElementById(resultBox);
+}, 60);
+</script>
 
-setTimeout(() = {
-    progressText.innerHTML = Analizando historial...;
-}, 2000);
-
-setTimeout(() = {
-    progressText.innerHTML = Detectando patrones sospechosos...;
-}, 4000);
-
-setTimeout(() = {
-    alertBox.classList.add(hidden);
-    resultBox.classList.remove(hidden);
-}, 6000);
-
-function revealJoke() {
-    resultBox.classList.add(hidden);
-    document.getElementById(jokeBox).classList.remove(hidden);
-}
-script
-
-body
-html
+</body>
+</html>
