@@ -1,0 +1,80 @@
+!DOCTYPE html
+html lang=es
+head
+meta charset=UTF-8
+titleSecurity Alerttitle
+style
+body {
+    background-color black;
+    color #00ff00;
+    font-family monospace;
+    text-align center;
+    padding-top 10%;
+}
+.box {
+    border 2px solid #00ff00;
+    padding 30px;
+    width 70%;
+    margin auto;
+}
+.hidden {
+    display none;
+}
+button {
+    margin-top 20px;
+    padding 10px 20px;
+    background-color red;
+    color white;
+    border none;
+    cursor pointer;
+}
+style
+head
+body
+
+div class=box id=alertBox
+    h1⚠ FEDERAL BROWSING INSPECTOR ⚠h1
+    pEscaneando dispositivo...p
+    p id=progressIniciando análisis...p
+div
+
+div class=box hidden id=resultBox
+    h2RESULTADO DEL ANÁLISISh2
+    pSe detectó un nivel inusual de tráfico hacia sitios educativos para adultos.p
+    pModo incógnito usado EXCESIVO.p
+    pTiempo promedio diario Vergonzoso.p
+    button onclick=revealJoke()Ver Resolución Oficialbutton
+div
+
+div class=box hidden id=jokeBox
+    h2😂 RELÁJATEh2
+    pEra una broma, enfermito.p
+    pTu historial está a salvo (creo).p
+div
+
+script
+let progressText = document.getElementById(progress);
+let alertBox = document.getElementById(alertBox);
+let resultBox = document.getElementById(resultBox);
+
+setTimeout(() = {
+    progressText.innerHTML = Analizando historial...;
+}, 2000);
+
+setTimeout(() = {
+    progressText.innerHTML = Detectando patrones sospechosos...;
+}, 4000);
+
+setTimeout(() = {
+    alertBox.classList.add(hidden);
+    resultBox.classList.remove(hidden);
+}, 6000);
+
+function revealJoke() {
+    resultBox.classList.add(hidden);
+    document.getElementById(jokeBox).classList.remove(hidden);
+}
+script
+
+body
+html
